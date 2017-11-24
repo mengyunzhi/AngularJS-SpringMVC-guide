@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "username": "zhangsan",
+    "name": "张三",
+    "email": "zhangsan@yunzhiclub.com",
+    "sex": "男"
+  },
+  {
+    "id": 2,
+    "username": "lisi",
+    "name": "李四",
+    "email": "lisi@yunzhiclub.com",
+    "sex": "女"
+  }
+]
