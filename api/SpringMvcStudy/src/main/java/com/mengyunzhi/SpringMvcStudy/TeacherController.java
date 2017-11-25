@@ -1,5 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,6 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController //声明一个控制器
 @RequestMapping("/Teacher") // 声明一个路由地址
 public class TeacherController {
+    @Autowired TeacherRepository teacherRepository; // 自动装置一个实例化的TeacherRepository
+
+    // 新增加一个地址为：/Teacher  的GET方法对应的action
+    @GetMapping("")
+    public Iterable<Teacher> getAll() {
+        Iterable teachers = teacherRepository.findAll();
+        return teachers;
+    }
 
     @RequestMapping("/helloWorld") // 声明一个路由地址
     public HelloWorld helloWorld() {
