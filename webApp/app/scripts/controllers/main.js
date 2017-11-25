@@ -11,7 +11,7 @@
 angular.module('webAppApp')
   .controller('MainCtrl', function ($scope, $http) {
     // 定义url请求地址
-    var url = '/data/main.json';
+    var url = 'http://127.0.0.1:8080/Teacher';
     
     // 定义一个方法，名字为success , 参数为response
     var success = function(response) {
