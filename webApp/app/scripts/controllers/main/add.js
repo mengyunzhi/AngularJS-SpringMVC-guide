@@ -23,8 +23,8 @@ angular.module('webAppApp')
 
     self.submit = function() {
     	// 把数据提交到 /Teadcher/ 这个地址，提交的方法为post
-    	var url = '/Teacher/';
-    	$http.post(url)
+    	var url = 'http://127.0.0.1:8080/Teacher/';
+    	$http.post(url, $scope.data)
     	.then(function(response){
     		console.log('success');
     	}, function(response){
@@ -33,5 +33,5 @@ angular.module('webAppApp')
     }
     
     self.init();
-    $scope.submit = self.submit();
+    $scope.submit = self.submit;
   });

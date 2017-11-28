@@ -1,9 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author panjie on 2017/11/25
@@ -18,6 +16,13 @@ public class TeacherController {
     public Iterable<Teacher> getAll() {
         Iterable teachers = teacherRepository.findAll();
         return teachers;
+    }
+
+    // 新增一个地址为：/Teacher/ 的post方法
+    @PostMapping("/")
+    public Teacher save(@RequestBody Teacher teacher) {
+        teacherRepository.save(teacher);
+        return teacher;
     }
 
     @RequestMapping("/helloWorld") // 声明一个路由地址
