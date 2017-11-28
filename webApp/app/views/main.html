@@ -12,6 +12,7 @@
 			<th>姓名</th>
 			<th>邮箱</th>
 			<th>性别</th>
+			<th>操作</th>
 		</tr>
 		<tr ng-repeat="_list in lists">
 			<td>{{_list.id}}</td>
@@ -19,6 +20,7 @@
 			<td>{{_list.name}}</td>
 			<td>{{_list.email}}</td>
 			<td>{{_list.sex}}</td>
+			<td><a href="#!/main/view/{{_list.id}}">查看</a></td>
 		</tr>
 	</table>
 </ui-view>

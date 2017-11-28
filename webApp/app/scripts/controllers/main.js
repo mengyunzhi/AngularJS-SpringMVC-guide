@@ -16,7 +16,6 @@ angular.module('webAppApp')
     // 定义一个方法，名字为success , 参数为response
     var success = function(response) {
       $scope.lists = response.data;
-    
       console.log('success');
     };
 

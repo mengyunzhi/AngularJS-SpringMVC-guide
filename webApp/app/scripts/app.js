@@ -35,6 +35,14 @@ angular
       controller: 'MainAddCtrl' // 控制器名称
     })
 
+    // 创建一个查看路由
+    .state({
+      name: 'main.view',
+      url: '/view/:id',
+      templateUrl: 'views/main/view.html',
+      controller: 'MainViewCtrl'
+    })
+
     .state({
       name: 'about', // 名称
       url: '/about', 

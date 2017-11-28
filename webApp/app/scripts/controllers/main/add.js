@@ -9,7 +9,7 @@
  * 教师管理 增加
  */
 angular.module('webAppApp')
-  .controller('MainAddCtrl', function($scope, $http) {
+  .controller('MainAddCtrl', function($scope, $http, $state) {
     // 初始化操作
     var self = this;
     self.init = function() {
@@ -26,7 +26,7 @@ angular.module('webAppApp')
     	var url = 'http://127.0.0.1:8080/Teacher/';
     	$http.post(url, $scope.data)
     	.then(function(response){
-    		console.log('success');
+    		$state.go('main');
     	}, function(response){
     		console.log('error');
     	});
