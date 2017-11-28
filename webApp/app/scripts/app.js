@@ -26,6 +26,14 @@ angular
       controller: 'MainCtrl', // 控制器名称
       templateUrl: 'views/main.html' // V层名称
     })
+
+    // 创建一个新路由
+    .state({
+      name: 'main.add', // 继承main路由，并声明自己的名字为add
+      url: '/add',      // 相当于 /main/add 由于继承了main路由
+      templateUrl: 'views/main/add.html'
+    })
+
     .state({
       name: 'about', // 名称
       url: '/about', 
