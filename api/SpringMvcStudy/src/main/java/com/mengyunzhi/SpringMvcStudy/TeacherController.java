@@ -33,6 +33,13 @@ public class TeacherController {
         return helloWorld;
     }
 
+    // 使用{id} 说明，将/Teacher/xxxx 中的xxxx命名为id
+    @GetMapping("/{id}")
+    public Teacher get(@PathVariable Long id) {
+        Teacher teacher = teacherRepository.findOne(id);
+        return teacher;
+    }
+
     static public class HelloWorld {
         private String name;
         private String value;
