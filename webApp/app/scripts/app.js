@@ -31,7 +31,8 @@ angular
     .state({
       name: 'main.add', // 继承main路由，并声明自己的名字为add
       url: '/add',      // 相当于 /main/add 由于继承了main路由
-      templateUrl: 'views/main/add.html'
+      templateUrl: 'views/main/add.html',
+      controller: 'MainAddCtrl' // 控制器名称
     })
 
     .state({
