@@ -22,8 +22,7 @@ public class SpringMvcStudyApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				// 添加一个映射 /Teacher
 				// 此映射允许进行CORS的地址为：http://localhost:9000
-				registry.addMapping("/Teacher").allowedOrigins("http://localhost:9000");
-				registry.addMapping("/Teacher/").allowedOrigins("http://localhost:9000");
+				registry.addMapping("/**").allowedOrigins("http://localhost:9000");
 			}
 		};
 	}

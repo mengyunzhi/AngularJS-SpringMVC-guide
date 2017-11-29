@@ -26,7 +26,8 @@ angular.module('webAppApp')
     	var url = 'http://127.0.0.1:8080/Teacher/';
     	$http.post(url, $scope.data)
     	.then(function(response){
-    		$state.go('main');
+            // 进行跳转
+    		$state.go('main', {}, {reload: true});
     	}, function(response){
     		console.log('error');
     	});
