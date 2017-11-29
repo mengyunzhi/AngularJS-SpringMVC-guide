@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Teacher") // 声明一个路由地址
 public class TeacherController {
     @Autowired TeacherRepository teacherRepository; // 自动装置一个实例化的TeacherRepository
+    @Autowired TeacherService teacherService;   // 教师
 
     // 新增加一个地址为：/Teacher  的GET方法对应的action
     @GetMapping("")
@@ -43,6 +44,7 @@ public class TeacherController {
     // 定义一个put路由来更新数据
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody Teacher teacher) {
+        teacherService.update(id, teacher);
         return;
     }
 
