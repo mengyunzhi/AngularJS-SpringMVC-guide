@@ -43,6 +43,14 @@ angular
       controller: 'MainViewCtrl'
     })
 
+    // 创建一个编辑路由
+    .state({
+      name: 'main.edit',
+      url: '/edit/:id',
+      templateUrl: 'views/main/edit.html',
+      controller: 'MainEditCtrl'
+    })
+
     .state({
       name: 'about', // 名称
       url: '/about', 
