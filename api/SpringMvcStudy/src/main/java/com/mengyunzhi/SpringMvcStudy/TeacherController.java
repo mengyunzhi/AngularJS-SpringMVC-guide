@@ -40,6 +40,12 @@ public class TeacherController {
         return teacher;
     }
 
+    // 定义一个put路由来更新数据
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestBody Teacher teacher) {
+        return;
+    }
+
     static public class HelloWorld {
         private String name;
         private String value;
