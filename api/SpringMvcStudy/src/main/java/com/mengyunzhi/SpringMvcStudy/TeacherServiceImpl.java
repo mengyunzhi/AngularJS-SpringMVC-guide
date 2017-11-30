@@ -1,5 +1,6 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,14 +9,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TeacherServiceImpl implements TeacherService {
+    @Autowired TeacherRepository teacherRepository;// 教师仓库
     /**
      * 更新实体
-     * @param id
-     * @param teacher
+     * @param id 被更新的实体ID
+     * @param newTeacher 要更新的内容
      * panjie
      */
     @Override
-    public void update(Long id, Teacher teacher) {
+    public void update(Long id, Teacher newTeacher) {
+        // 获取数据表中已保存的那个实体
+        Teacher oldTeacher = teacherRepository.findOne(id);
+
+        // 依次的更新各个字段
+        oldTeacher.setName(newTeacher.getName());
+        oldTeacher.setUsername(newTeacher.getUsername());
+        oldTeacher.setSex(newTeacher.isSex());
+        oldTeacher.setEmail(newTeacher.getEmail());
+
+        // 更新数据表
+        teacherRepository.save(oldTeacher);
         return;
     }
 }

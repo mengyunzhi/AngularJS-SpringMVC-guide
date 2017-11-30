@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
-
+import static org.assertj.core.api.Assertions.*;
 /**
  * @author panjie on 2017/11/29
  */
@@ -15,9 +14,34 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class TeacherServiceImplTest {
     @Autowired TeacherService teacherService;
+    @Autowired TeacherRepository teacherRepository; // 教师表
     @Test
     public void updateTest() throws Exception {
-        teacherService.update(1L, new Teacher());
+        // 新建一个教师张三，并持久化
+        Teacher zhangsanTeacher = new Teacher();
+        zhangsanTeacher.setName("张三");
+        zhangsanTeacher.setUsername("zhangsan");
+        zhangsanTeacher.setSex(true);
+        zhangsanTeacher.setEmail("zhangsan@yunzhiclub.com");
+        teacherRepository.save(zhangsanTeacher);
+        Long id = zhangsanTeacher.getId();
+
+        // 新建一个教师李四
+        Teacher lisiTeacher = new Teacher();
+        lisiTeacher.setName("李四");
+        lisiTeacher.setUsername("lisi");
+        lisiTeacher.setSex(false);
+        lisiTeacher.setEmail("lisi@yunzhiclub.com");
+
+        // 使用李四的信息来更新张三的信息
+        teacherService.update(id, lisiTeacher);
+
+        // 断言更新信息成功
+        Teacher newTeacher = teacherRepository.findOne(id);
+        assertThat(newTeacher.getName()).isEqualTo("李四");
+        assertThat(newTeacher.getUsername()).isEqualTo("lisi");
+        assertThat(newTeacher.getEmail()).isEqualTo("lisi@yunzhiclub.com");
+        assertThat(newTeacher.isSex()).isFalse();
     }
 
 }
