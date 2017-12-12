@@ -1,5 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import com.mengyunzhi.SpringMvcStudy.repository.Teacher;
+
 /**
  * 教师
  * @author panjie on 2017/11/29

@@ -1,5 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import com.mengyunzhi.SpringMvcStudy.repository.Teacher;
+import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController //声明一个控制器
 @RequestMapping("/Teacher") // 声明一个路由地址
 public class TeacherController {
-    @Autowired TeacherRepository teacherRepository; // 自动装置一个实例化的TeacherRepository
+    @Autowired
+    TeacherRepository teacherRepository; // 自动装置一个实例化的TeacherRepository
     @Autowired TeacherService teacherService;   // 教师
 
     // 新增加一个地址为：/Teacher  的GET方法对应的action

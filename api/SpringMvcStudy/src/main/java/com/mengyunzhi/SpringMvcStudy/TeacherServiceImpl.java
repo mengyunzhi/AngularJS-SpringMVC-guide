@@ -1,5 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import com.mengyunzhi.SpringMvcStudy.repository.Teacher;
+import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TeacherServiceImpl implements TeacherService {
-    @Autowired TeacherRepository teacherRepository;// 教师仓库
+    @Autowired
+    TeacherRepository teacherRepository;// 教师仓库
     /**
      * 更新实体
      * @param id 被更新的实体ID

@@ -1,5 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy;
 
+import com.mengyunzhi.SpringMvcStudy.repository.Teacher;
+import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,8 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 public class TeacherServiceImplTest {
     @Autowired TeacherService teacherService;
-    @Autowired TeacherRepository teacherRepository; // 教师表
+    @Autowired
+    TeacherRepository teacherRepository; // 教师表
     @Test
     public void updateTest() throws Exception {
         // 新建一个教师张三，并持久化
