@@ -49,7 +49,13 @@ public class TeacherControllerTest {
 
     @Test
     public void updateTest() throws Exception {
-        String url = "/Teacher/1";
+        // 添加测试数据
+        // 实例化一个Teacher并且持久化
+        Teacher teacher = new Teacher();
+        teacherRepository.save(teacher);
+
+        // 更新这个持久化的Teacher
+        String url = "/Teacher/" + teacher.getId();
         this.mockMvc
                 .perform(put(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
