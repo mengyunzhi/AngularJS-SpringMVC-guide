@@ -52,11 +52,21 @@ angular
     })
 
     .state({
-      name: 'about', // 名称
-      url: '/about', 
-      controller: 'AboutCtrl', // 控制器名称
-      templateUrl: 'views/about.html' // V层名称
+      name: 'klass', // 名称
+      url: '/klass', 
+      controller: 'KlassIndexCtrl', // 控制器名称
+      templateUrl: 'views/klass/index.html' // V层名称
+    })
+
+      // 创建一个新路由
+    .state({
+      name: 'klass.add', // 继承main路由，并声明自己的名字为add
+      url: '/add',      // 相当于 /main/add 由于继承了main路由
+      templateUrl: 'views/klass/add.html',
+      controller: 'KlassAddCtrl' // 控制器名称
     });
+
+
 
     $urlRouterProvider.otherwise('/main');
    
