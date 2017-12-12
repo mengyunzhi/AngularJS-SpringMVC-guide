@@ -8,4 +8,6 @@ import com.mengyunzhi.SpringMvcStudy.repository.Klass;
  */
 public interface KlassService {
     Klass save(Klass klass);
+
+    Iterable<Klass> getAll();
 }

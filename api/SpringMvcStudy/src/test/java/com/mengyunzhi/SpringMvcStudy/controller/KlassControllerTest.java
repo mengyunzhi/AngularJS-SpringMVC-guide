@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class KlassControllerTest {
+
+
     @Autowired
     private MockMvc mockMvc;    // 模拟进行REST请求
 
@@ -34,6 +37,16 @@ public class KlassControllerTest {
                 .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().is(201));
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        String url = "/Klass/";
+        this.mockMvc
+                .perform(get(url)
+                        .header("content-type", MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
 

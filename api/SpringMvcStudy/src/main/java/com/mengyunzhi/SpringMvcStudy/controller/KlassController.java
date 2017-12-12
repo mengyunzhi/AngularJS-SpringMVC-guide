@@ -21,4 +21,9 @@ public class KlassController {
     public Klass save(@RequestBody Klass klass) {
         return klassService.save(klass);
     }
+
+    @GetMapping("/")
+    public Iterable<Klass> getAll() {
+        return klassService.getAll();
+    }
 }

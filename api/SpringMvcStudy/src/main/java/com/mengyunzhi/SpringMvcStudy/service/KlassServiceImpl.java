@@ -18,4 +18,9 @@ public class KlassServiceImpl implements KlassService {
     public Klass save(Klass klass) {
         return klassRepository.save(klass);
     }
+
+    @Override
+    public Iterable<Klass> getAll() {
+        return klassRepository.findAll();
+    }
 }

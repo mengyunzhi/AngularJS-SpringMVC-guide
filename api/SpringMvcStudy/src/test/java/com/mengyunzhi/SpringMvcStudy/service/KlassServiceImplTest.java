@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import sun.rmi.runtime.Log;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 
@@ -19,6 +21,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class KlassServiceImplTest {
+
+
     private final static Logger logger = Logger.getLogger(KlassServiceImplTest.class.getName());
     @Autowired KlassService klassService;   // 班级
     @Autowired
@@ -36,6 +40,18 @@ public class KlassServiceImplTest {
 
         logger.info("断言查询到的值不是null");
         assertThat(newKlass).isNotNull();
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        logger.info("new一个对象");
+        Klass klass = new Klass();
+
+        logger.info("调用保存方法");
+        klassService.save(klass);
+
+        List<Klass> klassList = (List<Klass>) klassService.getAll();
+        assertThat(klassList.size()).isNotZero();
     }
 
 }
