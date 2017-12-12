@@ -12,4 +12,6 @@ public interface TeacherService {
      * panjie
      */
     void update(Long id, Teacher teacher);
+
+    void delete(Long id);
 }

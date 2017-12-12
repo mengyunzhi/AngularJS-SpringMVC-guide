@@ -44,4 +44,19 @@ public class TeacherServiceImplTest {
         assertThat(newTeacher.isSex()).isFalse();
     }
 
+    @Test
+    public void deleteTest() {
+        // 首先添加一个数据
+        Teacher teacher = new Teacher();
+        teacherRepository.save(teacher);
+        Long id = teacher.getId();
+
+        // 然后再去调用删除方法来删除 这个数据
+        teacherService.delete(id);
+
+        // 断言这个删除这个删除成功（查找的时候，查不到了)
+        Teacher newTeacher = teacherRepository.findOne(id);
+        assertThat(newTeacher).isNull();
+    }
+
 }
