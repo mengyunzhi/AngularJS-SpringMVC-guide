@@ -31,4 +31,9 @@ public class KlassController {
     public Klass getById(@PathVariable Long id) {
         return klassService.getById(id);
     }
+
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestBody Klass klass) {
+        klassService.updateByIdAndKlass(id, klass);
+    }
 }

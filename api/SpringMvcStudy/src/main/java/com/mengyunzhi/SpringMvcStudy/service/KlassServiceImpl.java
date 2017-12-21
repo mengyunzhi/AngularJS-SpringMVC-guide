@@ -28,4 +28,18 @@ public class KlassServiceImpl implements KlassService {
     public Klass getById(Long id) {
         return klassRepository.findOne(id);
     }
+
+    @Override
+    public void updateByIdAndKlass(Long id, Klass newKlass) {
+        // 获取传入的ID对应的实体
+        Klass oldKlass = klassRepository.findOne(id);
+
+        // 更新实体的内容
+        if (oldKlass != null) {
+            oldKlass.setName(newKlass.getName());
+            oldKlass.setTeacher(newKlass.getTeacher());
+
+            klassRepository.save(oldKlass);
+        }
+    }
 }

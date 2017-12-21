@@ -12,4 +12,12 @@ public interface KlassService {
     Iterable<Klass> getAll();
 
     Klass getById(Long id);
+
+    /**
+     * 更新
+     * @param id 更新实体的iD
+     * @param klass 更新的内容
+     *              @author panjie
+     */
+    void updateByIdAndKlass(Long id, Klass klass);
 }
