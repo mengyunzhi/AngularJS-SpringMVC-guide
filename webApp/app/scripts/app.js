@@ -60,10 +60,17 @@ angular
 
       // 创建一个新路由
     .state({
-      name: 'klass.add', // 继承main路由，并声明自己的名字为add
-      url: '/add',      // 相当于 /main/add 由于继承了main路由
+      name: 'klass.add', // 继承klass路由，并声明自己的名字为add
+      url: '/add',      // 相当于 /klass/add 由于继承了klass路由
       templateUrl: 'views/klass/add.html',
       controller: 'KlassAddCtrl' // 控制器名称
+    })
+
+     .state({
+      name: 'klass.edit', // 继承klass路由，并声明自己的名字为edit
+      url: '/edit/:id',      // 相当于 /klass/edit 由于继承了klass路由
+      templateUrl: 'views/klass/edit.html',
+      controller: 'KlassEditCtrl' // 控制器名称
     });
 
 
