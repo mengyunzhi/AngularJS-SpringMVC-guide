@@ -10,4 +10,6 @@ public interface KlassService {
     Klass save(Klass klass);
 
     Iterable<Klass> getAll();
+
+    Klass getById(Long id);
 }

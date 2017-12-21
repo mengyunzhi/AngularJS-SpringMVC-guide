@@ -26,4 +26,9 @@ public class KlassController {
     public Iterable<Klass> getAll() {
         return klassService.getAll();
     }
+
+    @GetMapping("/{id}")
+    public Klass getById(@PathVariable Long id) {
+        return klassService.getById(id);
+    }
 }

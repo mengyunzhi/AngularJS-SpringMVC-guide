@@ -23,4 +23,9 @@ public class KlassServiceImpl implements KlassService {
     public Iterable<Klass> getAll() {
         return klassRepository.findAll();
     }
+
+    @Override
+    public Klass getById(Long id) {
+        return klassRepository.findOne(id);
+    }
 }
