@@ -18,7 +18,7 @@ angular.module('webAppApp')
       // 接收ID
       var id = $stateParams.id;
       // 使用这个ID去请求信息
-      var url = 'http://127.0.0.1:8080/Teacher/' + id;
+      var url = '/Teacher/' + id;
 
       $http.get(url)
         .then(function success(response) {
@@ -32,7 +32,7 @@ angular.module('webAppApp')
 
     self.submit = function() {
     	var id = $stateParams.id;
-    	var url = 'http://127.0.0.1:8080/Teacher/' + id;
+    	var url = '/Teacher/' + id;
 
     	$http.put(url, $scope.data)
     	.then(function success(response){

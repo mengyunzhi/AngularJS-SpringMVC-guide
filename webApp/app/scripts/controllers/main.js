@@ -13,7 +13,7 @@ angular.module('webAppApp')
     var self = this;
     self.init = function() {
       // 定义url请求地址
-      var url = 'http://127.0.0.1:8080/Teacher';
+      var url = '/Teacher';
 
       $http.get(url)
         .then(function success(response) {
@@ -26,7 +26,7 @@ angular.module('webAppApp')
 
 
     self.delete = function(teacher) {
-      var url = 'http://127.0.0.1:8080/Teacher/' + teacher.id;
+      var url = '/Teacher/' + teacher.id;
       $http.delete(url)
         .then(function success() {
           console.log('删除数据成功');

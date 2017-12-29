@@ -14,7 +14,7 @@ angular.module('webAppApp')
     self.init = function() {
       // 应该获取当前这个班级
       var id = $stateParams.id;
-      var url = 'http://127.0.0.1:8080/Klass/' + id;
+      var url = '/Klass/' + id;
       $http.get(url)
         .then(function success(response) {
           // 把获取的班级，传给V层（V层进行绑定)
@@ -28,7 +28,7 @@ angular.module('webAppApp')
     // 提交数据
     self.submit = function() {
       var id = $stateParams.id;
-      var url = 'http://127.0.0.1:8080/Klass/' + id;
+      var url = '/Klass/' + id;
       $http.put(url, $scope.data)
         .then(function success(response) {
           // 把获取的班级，传给V层（V层进行绑定)

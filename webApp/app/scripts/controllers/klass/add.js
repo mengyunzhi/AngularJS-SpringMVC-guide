@@ -22,7 +22,7 @@ angular.module('webAppApp')
     };
 
     self.submit = function() {
-      var url = 'http://127.0.0.1:8080/Klass/';
+      var url = '/Klass/';
       $http.post(url, $scope.data)
         .then(function success(response) {
           console.log(response);

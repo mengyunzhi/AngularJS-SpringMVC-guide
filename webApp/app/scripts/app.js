@@ -18,63 +18,81 @@ angular
     'ngTouch',
     'ui.router'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $provide, $httpProvider) {
     $stateProvider
-    .state({
-      name: 'main', // 名称
-      url: '/main', 
-      controller: 'MainCtrl', // 控制器名称
-      templateUrl: 'views/main.html' // V层名称
-    })
-
-    // 创建一个新路由
-    .state({
-      name: 'main.add', // 继承main路由，并声明自己的名字为add
-      url: '/add',      // 相当于 /main/add 由于继承了main路由
-      templateUrl: 'views/main/add.html',
-      controller: 'MainAddCtrl' // 控制器名称
-    })
-
-    // 创建一个查看路由
-    .state({
-      name: 'main.view',
-      url: '/view/:id',
-      templateUrl: 'views/main/view.html',
-      controller: 'MainViewCtrl'
-    })
-
-    // 创建一个编辑路由
-    .state({
-      name: 'main.edit',
-      url: '/edit/:id',
-      templateUrl: 'views/main/edit.html',
-      controller: 'MainEditCtrl'
-    })
-
-    .state({
-      name: 'klass', // 名称
-      url: '/klass', 
-      controller: 'KlassIndexCtrl', // 控制器名称
-      templateUrl: 'views/klass/index.html' // V层名称
-    })
+      .state({
+        name: 'main', // 名称
+        url: '/main',
+        controller: 'MainCtrl', // 控制器名称
+        templateUrl: 'views/main.html' // V层名称
+      })
 
       // 创建一个新路由
-    .state({
-      name: 'klass.add', // 继承klass路由，并声明自己的名字为add
-      url: '/add',      // 相当于 /klass/add 由于继承了klass路由
-      templateUrl: 'views/klass/add.html',
-      controller: 'KlassAddCtrl' // 控制器名称
-    })
+      .state({
+        name: 'main.add', // 继承main路由，并声明自己的名字为add
+        url: '/add', // 相当于 /main/add 由于继承了main路由
+        templateUrl: 'views/main/add.html',
+        controller: 'MainAddCtrl' // 控制器名称
+      })
 
-     .state({
-      name: 'klass.edit', // 继承klass路由，并声明自己的名字为edit
-      url: '/edit/:id',      // 相当于 /klass/edit 由于继承了klass路由
-      templateUrl: 'views/klass/edit.html',
-      controller: 'KlassEditCtrl' // 控制器名称
-    });
+      // 创建一个查看路由
+      .state({
+        name: 'main.view',
+        url: '/view/:id',
+        templateUrl: 'views/main/view.html',
+        controller: 'MainViewCtrl'
+      })
+
+      // 创建一个编辑路由
+      .state({
+        name: 'main.edit',
+        url: '/edit/:id',
+        templateUrl: 'views/main/edit.html',
+        controller: 'MainEditCtrl'
+      })
+
+      .state({
+        name: 'klass', // 名称
+        url: '/klass',
+        controller: 'KlassIndexCtrl', // 控制器名称
+        templateUrl: 'views/klass/index.html' // V层名称
+      })
+
+      // 创建一个新路由
+      .state({
+        name: 'klass.add', // 继承klass路由，并声明自己的名字为add
+        url: '/add', // 相当于 /klass/add 由于继承了klass路由
+        templateUrl: 'views/klass/add.html',
+        controller: 'KlassAddCtrl' // 控制器名称
+      })
+
+      .state({
+        name: 'klass.edit', // 继承klass路由，并声明自己的名字为edit
+        url: '/edit/:id', // 相当于 /klass/edit 由于继承了klass路由
+        templateUrl: 'views/klass/edit.html',
+        controller: 'KlassEditCtrl' // 控制器名称
+      });
 
 
 
     $urlRouterProvider.otherwise('/main');
-   
+
+    // 注册一个用于拦截http的拦截器
+    $provide.factory('myHttpInterceptor', function($q) {
+      return {
+        // 拦截请求信息
+        'request': function(config) {
+          // 如果以html结尾，那么就不进行URL的改写, 否则就进行改写
+          var suffix = config.url.split('.').pop();
+          if (suffix !== 'html') {
+            config.url = 'http://127.0.0.1:8080' + config.url;
+          }
+         
+          return config;
+        }
+      };
+    });
+
+    $httpProvider.interceptors.push('myHttpInterceptor');
+
   });

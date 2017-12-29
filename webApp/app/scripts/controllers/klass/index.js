@@ -12,7 +12,7 @@ angular.module('webAppApp')
     var self = this;
 
     self.init = function() {
-    	var url = 'http://127.0.0.1:8080/Klass/';
+    	var url = '/Klass/';
             $http.get(url)
             .then(function success(response){
                 $scope.lists = response.data;

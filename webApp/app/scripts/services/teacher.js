@@ -19,7 +19,7 @@ angular.module('webAppApp')
      * @return {[type]}            [description]
      */
     self.getAllTeachers = function(callback) {
-      var url = 'http://127.0.0.1:8080/Teacher/';
+      var url = '/Teacher/';
       $http.get(url)
         .then(function success(response) {
           if (callback) {

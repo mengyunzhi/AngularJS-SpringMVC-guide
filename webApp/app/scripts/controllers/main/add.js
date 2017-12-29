@@ -23,7 +23,7 @@ angular.module('webAppApp')
 
     self.submit = function() {
     	// 把数据提交到 /Teadcher/ 这个地址，提交的方法为post
-    	var url = 'http://127.0.0.1:8080/Teacher/';
+    	var url = '/Teacher/';
     	$http.post(url, $scope.data)
     	.then(function(response){
             // 进行跳转
