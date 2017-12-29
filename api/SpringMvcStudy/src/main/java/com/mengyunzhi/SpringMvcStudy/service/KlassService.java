@@ -11,6 +11,7 @@ public interface KlassService {
 
     Iterable<Klass> getAll();
 
+    void delete(Long id);
     Klass getById(Long id);
 
     /**

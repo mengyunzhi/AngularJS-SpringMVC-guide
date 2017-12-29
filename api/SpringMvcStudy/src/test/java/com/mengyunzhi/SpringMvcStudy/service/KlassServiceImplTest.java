@@ -54,4 +54,17 @@ public class KlassServiceImplTest {
         assertThat(klassList.size()).isNotZero();
     }
 
+    @Test
+    public void delete() {
+        logger.info("new 一个对象");
+        Klass klass = new Klass();
+        klassRepository.save(klass);
+
+        logger.info("调用M层的删除方法");
+        klassService.delete(klass.getId());
+
+        logger.info("断方删除是否成功");
+        Klass newKlass = klassRepository.findOne(klass.getId());
+        assertThat(newKlass).isNull();
+    }
 }

@@ -2,6 +2,7 @@ package com.mengyunzhi.SpringMvcStudy.controller;
 
 import com.mengyunzhi.SpringMvcStudy.repository.Klass;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 public class KlassControllerTest {
+    private final static Logger logger = Logger.getLogger(KlassControllerTest.class.getName());
     static final String url = "/Klass/";
 
     @Autowired
@@ -99,6 +101,24 @@ public class KlassControllerTest {
         // 断言更新成功(去数据库里找一个这个实体，并获取name，看是否成功)
         Klass newKlass = klassRepository.findOne(klass.getId());
         assertThat(newKlass.getName()).isEqualTo(newName);
+    }
+
+    @Test
+    public void deleteTest() throws Exception {
+        logger.info("new 一个对象");
+        Klass klass = new Klass();
+        klassRepository.save(klass);
+
+        String deleteUrl = url + klass.getId().toString();
+        logger.info("调用C层的删除方法");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete(deleteUrl)
+                        .header("content-type", MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().is(204));
+
+        logger.info("断方删除是否成功");
+        Klass newKlass = klassRepository.findOne(klass.getId());
+        assertThat(newKlass).isNull();
     }
 
 

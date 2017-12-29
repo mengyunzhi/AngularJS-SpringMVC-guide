@@ -25,6 +25,11 @@ public class KlassServiceImpl implements KlassService {
     }
 
     @Override
+    public void delete(Long id) {
+        klassRepository.delete(id);
+    }
+
+    @Override
     public Klass getById(Long id) {
         return klassRepository.findOne(id);
     }

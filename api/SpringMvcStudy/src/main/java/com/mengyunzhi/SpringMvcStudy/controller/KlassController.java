@@ -36,4 +36,10 @@ public class KlassController {
     public void update(@PathVariable Long id, @RequestBody Klass klass) {
         klassService.updateByIdAndKlass(id, klass);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        klassService.delete(id);
+    }
 }
