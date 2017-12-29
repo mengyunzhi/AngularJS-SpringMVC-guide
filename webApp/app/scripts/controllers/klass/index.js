@@ -8,7 +8,7 @@
  * 班级管理 列表页
  */
 angular.module('webAppApp')
-  .controller('KlassIndexCtrl', function($http, $scope) {
+  .controller('KlassIndexCtrl', function($http, $scope, klass) {
     var self = this;
 
     self.init = function() {
@@ -21,6 +21,21 @@ angular.module('webAppApp')
             });
     };
 
+    /**
+     * 删除
+     * @param  {[type]} object 要删除的对象
+     * @return {}        
+     * panjie
+     */
+    self.delete = function(object) {
+        // 应该去触发后台的删除操作
+        klass.delete(object, function() {
+            // 将元素隐藏掉
+            object._delete = true;
+        });
+    };
+
     self.init();
+    $scope.delete = self.delete;
 
   });
