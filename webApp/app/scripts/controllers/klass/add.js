@@ -19,21 +19,7 @@ angular.module('webAppApp')
         name: '',
         teacher: {}
       };
-      self.getAllTeachers();
-
     };
-
-    /**
-     * 获取所有的教师
-     * @return
-     * panjie
-     */
-    self.getAllTeachers = function() {
-      teacher.getAllTeachers(function(teachers) {
-        $scope.teachers = teachers;
-      });
-    };
-
 
     self.submit = function() {
       var url = 'http://127.0.0.1:8080/Klass/';
