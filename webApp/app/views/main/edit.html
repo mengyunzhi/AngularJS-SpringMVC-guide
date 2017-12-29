@@ -20,13 +20,13 @@
 					<input type="text" ng-model="data.email" class="form-control" id="inputEmail3" placeholder="Email">
 				</div>
 			</div>
-
+		<pre>{{data.sex | json}}</pre>
 			<div class="form-group">
 				<label for="sex" class="col-sm-2 control-label">性别</label>
 				<div class="col-sm-10">
 					<select id="sex" name="sex" ng-model="data.sex">
-						<option value="true">男</option>
-						<option value="false">女</option>
+						<option ng-value="true">男</option>
+						<option ng-value="false">女</option>
 					</select>
 				</div>
 			</div>
