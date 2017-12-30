@@ -1,14 +1,10 @@
 package com.mengyunzhi.SpringMvcStudy.service;
 
-import com.mengyunzhi.SpringMvcStudy.repository.Klass;
+import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -18,11 +14,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 /**
  * @author panjie on 2017/12/12
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class KlassServiceImplTest {
-
-
+public class KlassServiceImplTest extends ServiceTest{
     private final static Logger logger = Logger.getLogger(KlassServiceImplTest.class.getName());
     @Autowired KlassService klassService;   // 班级
     @Autowired
