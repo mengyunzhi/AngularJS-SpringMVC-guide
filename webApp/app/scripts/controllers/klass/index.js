@@ -10,21 +10,18 @@
 angular.module('webAppApp')
   .controller('KlassIndexCtrl', function($http, $scope, klass) {
     var self = this;
+    var page = 0;
 
-    self.init = function() {
-    	var url = '/Klass/';
-            $http.get(url)
-            .then(function success(response){
-                $scope.lists = response.data;
-            }, function error(){
-                console.log('请求教师列表发生错误');
-            });
+    self.init = function(page) {
+        klass.page(page, 3, function(data){
+            $scope.data = data;
+        });
     };
 
     /**
      * 删除
      * @param  {[type]} object 要删除的对象
-     * @return {}        
+     * @return {}
      * panjie
      */
     self.delete = function(object) {
@@ -35,7 +32,9 @@ angular.module('webAppApp')
         });
     };
 
-    self.init();
+    self.init(page);
     $scope.delete = self.delete;
+    $scope.reload = self.init;
+
 
   });
