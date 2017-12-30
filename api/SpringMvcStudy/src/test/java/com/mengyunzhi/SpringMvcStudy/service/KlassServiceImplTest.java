@@ -3,8 +3,11 @@ package com.mengyunzhi.SpringMvcStudy.service;
 import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
 import org.apache.log4j.Logger;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -58,5 +61,12 @@ public class KlassServiceImplTest extends ServiceTest{
         logger.info("断方删除是否成功");
         Klass newKlass = klassRepository.findOne(klass.getId());
         assertThat(newKlass).isNull();
+    }
+
+    @Test
+    public void page() {
+        PageRequest pageRequest = new PageRequest(0, 2);
+        Page<Klass> klasses = klassService.page(pageRequest);
+        AssertionsForClassTypes.assertThat(klasses.getTotalElements()).isGreaterThanOrEqualTo(0);
     }
 }

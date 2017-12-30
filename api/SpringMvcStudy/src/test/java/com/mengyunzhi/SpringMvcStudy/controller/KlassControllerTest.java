@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author panjie on 2017/12/12
  */
-public class KlassControllerTest extends ControllerTest{
+public class KlassControllerTest extends ControllerTest {
     private final static Logger logger = Logger.getLogger(KlassControllerTest.class.getName());
     static final String url = "/Klass/";
 
@@ -48,6 +48,19 @@ public class KlassControllerTest extends ControllerTest{
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void page() throws Exception {
+        String pageUrl = url + "page";
+        this.mockMvc
+                .perform(get(pageUrl)
+                        .header("content-type", MediaType.APPLICATION_JSON_UTF8)
+                        .param("page", "0")
+                        .param("size", "2"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.totalElements").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.number").value(0));
     }
 
     @Test
