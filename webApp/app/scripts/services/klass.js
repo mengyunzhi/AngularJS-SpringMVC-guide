@@ -13,20 +13,12 @@ angular.module('webAppApp')
 
         /**
          * 分页
-         * @param page 第几页
-         * @param size 第页大小
+         * @param params 查询参数 {page:当前页， size: 每页大小}
          * @param callback
          * panjie
          */
-        self.page = function(page, size, callback) {
+        self.page = function(params, callback) {
             var url = '/Klass/page';
-
-            // 定义参数
-            var params = {
-                page: page,
-                size: size
-            };
-
             // 使用参数发起get请求
             $http.get(url, {params: params})
                 .then(function success(response){
@@ -38,7 +30,7 @@ angular.module('webAppApp')
 
         /**
          * 删除
-         * @param
+         * @param 要删除的对象
          * @param callback
          */
         self.delete = function(object, callback) {

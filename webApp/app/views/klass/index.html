@@ -5,7 +5,8 @@
 			<a class="btn btn-default" href="#!/klass/add" role="button">增加</a>
 		</div>
 	</div>
-	<br>
+	<hr>
+    <p><yunzhi-size ng-model="params.size" data-reload="reloadBySize"></yunzhi-size></p>
 	<table class="table">
 		<tr>
 			<th>序号</th>
@@ -20,5 +21,5 @@
 			<td><a href="#!/klass/view/{{_list.id}}">查看</a>&nbsp;<a href="#!/klass/edit/{{_list.id}}">编辑</a><button ng-click="delete(_list)">删除</button></td>
 		</tr>
 	</table>
-    <yunzhi-page data-total-pages="data.totalPages" data-number="data.number" data-reload="reload"></yunzhi-page>
+    <yunzhi-page data-total-pages="data.totalPages" data-number="data.number" data-reload="reloadByPage"></yunzhi-page>
 </ui-view>
