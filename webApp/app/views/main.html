@@ -19,7 +19,7 @@
 			<td>{{_list.username}}</td>
 			<td>{{_list.name}}</td>
 			<td>{{_list.email}}</td>
-			<td>{{_list.sex}}</td>
+			<td>{{_list.sex | yunzhiSex}}</td>
 			<td><a href="#!/main/view/{{_list.id}}">查看</a>&nbsp;<a href="#!/main/edit/{{_list.id}}">编辑</a><button ng-click="delete(_list)">删除</button></td>
 		</tr>
 	</table>
