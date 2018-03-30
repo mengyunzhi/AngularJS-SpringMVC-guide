@@ -1,5 +1,9 @@
 package com.mengyunzhi.SpringMvcStudy.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.mengyunzhi.SpringMvcStudy.jsonView.KlassJsonView;
+import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
+
 import javax.persistence.*;
 
 /**
@@ -10,11 +14,18 @@ import javax.persistence.*;
 public class Klass {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(KlassJsonView.getAll.class)
     private Long id;
+
+    @JsonView({
+            TeacherJsonView.get.class,
+            KlassJsonView.getAll.class
+    })
     private String name;
 
     @ManyToOne
-    private Teacher teacher;
+    @JsonView(KlassJsonView.getAll.class)
+    private Teacher teacher;    // 辅导员
 
     public Klass() {
     }
