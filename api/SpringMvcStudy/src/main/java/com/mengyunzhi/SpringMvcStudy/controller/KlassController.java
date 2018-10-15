@@ -23,7 +23,7 @@ public class KlassController {
         return klassService.save(klass);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public Iterable<Klass> getAll() {
         return klassService.getAll();
     }
