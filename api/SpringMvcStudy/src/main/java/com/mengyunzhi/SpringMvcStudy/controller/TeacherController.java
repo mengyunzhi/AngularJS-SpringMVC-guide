@@ -1,8 +1,6 @@
 package com.mengyunzhi.SpringMvcStudy.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
-import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,7 @@ public class TeacherController {
     TeacherService teacherService;   // 教师
 
     // 新增加一个地址为：/Teacher  的GET方法对应的action
-    @GetMapping
-    @JsonView(TeacherJsonView.class)
+    @GetMapping("")
     public Iterable<Teacher> getAll() {
         Iterable teachers = teacherRepository.findAll();
         return teachers;
@@ -44,7 +41,6 @@ public class TeacherController {
 
     // 使用{id} 说明，将/Teacher/xxxx 中的xxxx命名为id
     @GetMapping("/{id}")
-    @JsonView(TeacherJsonView.class)
     public Teacher get(@PathVariable Long id) {
         Teacher teacher = teacherRepository.findOne(id);
         return teacher;

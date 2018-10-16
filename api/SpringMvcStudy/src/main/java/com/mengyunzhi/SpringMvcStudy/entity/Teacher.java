@@ -1,11 +1,9 @@
 package com.mengyunzhi.SpringMvcStudy.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * @author panjie on 2017/11/25
@@ -14,24 +12,11 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(TeacherJsonView.class)
     private Long id;
-
-    @JsonView(TeacherJsonView.class)
     private String username;
-
-    @JsonView(TeacherJsonView.class)
     private String name;
-
-    @JsonView(TeacherJsonView.class)
     private boolean sex;
-
-    @JsonView(TeacherJsonView.class)
     private String email;
-
-    @OneToMany(mappedBy = "teacher")
-    @JsonView(TeacherJsonView.class)
-    private List<Klass> klassList = new ArrayList<>();
 
     public Teacher() {
     }
@@ -74,13 +59,5 @@ public class Teacher {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Klass> getKlassList() {
-        return klassList;
-    }
-
-    public void setKlassList(List<Klass> klassList) {
-        this.klassList = klassList;
     }
 }

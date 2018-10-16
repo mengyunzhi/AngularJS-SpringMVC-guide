@@ -4,26 +4,6 @@
 		<p>用户名：{{data.username}}</p>
 		<p>email:{{data.email}}</p>
 		<p>性别: {{data.sex}}</p>
+		<a href="#!/main">返回</a>
 	</div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-md-6">
-        <h3>班级列表</h3>
-        <table class="table">
-            <tr>
-                <th>序号</th>
-                <th>班级名称</th>
-            </tr>
-            <tr ng-repeat="_klass in data.klassList">
-                <td>{{$index + 1}}</td>
-                <td>{{_klass.name}}</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <a class="btn btn-primary" href="#!/main">返回</a>
-    </div>
 </div>
