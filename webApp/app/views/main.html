@@ -12,6 +12,7 @@
 			<th>姓名</th>
 			<th>邮箱</th>
 			<th>性别</th>
+			<th>管理班级</th>
 			<th>操作</th>
 		</tr>
 		<tr ng-repeat="_list in lists">
@@ -20,6 +21,11 @@
 			<td>{{_list.name}}</td>
 			<td>{{_list.email}}</td>
 			<td>{{_list.sex | yunzhiSex}}</td>
+			<td>
+				<p ng-repeat="_klass in _list.klassList">
+					{{_klass.name}}
+				</p>
+			</td>
 			<td><a href="#!/main/view/{{_list.id}}">查看</a>&nbsp;<a href="#!/main/edit/{{_list.id}}">编辑</a><button ng-click="delete(_list)">删除</button></td>
 		</tr>
 	</table>
