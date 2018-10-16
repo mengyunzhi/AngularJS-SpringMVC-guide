@@ -42,10 +42,6 @@ public class Teacher {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -80,9 +76,5 @@ public class Teacher {
 
     public List<Klass> getKlassList() {
         return klassList;
-    }
-
-    public void setKlassList(List<Klass> klassList) {
-        this.klassList = klassList;
     }
 }

@@ -1,11 +1,17 @@
 package com.mengyunzhi.SpringMvcStudy.controller;
 
+import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
+import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -18,14 +24,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author panjie on 2017/11/28
  */
 public class TeacherControllerTest extends ControllerTest {
+    private final static Logger logger = LoggerFactory.getLogger(TeacherControllerTest.class.getName());
 
     @Autowired
     private MockMvc mockMvc;    // 模拟进行REST请求
     @Autowired
-    TeacherRepository teacherRepository;
+    TeacherRepository teacherRepository;    // 教师
+    @Autowired
+    KlassRepository klassRepository; // 班级
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
     public void getAllTest() throws Exception {
+        logger.info("init teacher data");
+        Teacher teacher = new Teacher();
+        teacher.setSex(true);
+        teacher.setEmail("test@yunzhiclub.com");
+        teacher.setName("test teacher name");
+        teacher.setUsername("test+sdfsdfefwefwe'sl;fmsdlfml");
+        teacherRepository.save(teacher);
+
+        logger.info("init klass data");
+        Klass klass = new Klass();
+        klass.setName("test name");
+        klass.setTeacher(teacher);
+        klassRepository.save(klass);
+
         String url = "/Teacher";
         this.mockMvc
                 .perform(get(url))  // 用get方法来请求这个url
@@ -34,14 +58,22 @@ public class TeacherControllerTest extends ControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
     public void getTest() throws Exception {
         // 创建一条数据
+        logger.info("init teacher data");
         Teacher teacher = new Teacher();
-        teacher.setUsername("usrname");
-        teacher.setName("name");
-        teacher.setEmail("email");
         teacher.setSex(true);
+        teacher.setEmail("test@yunzhiclub.com");
+        teacher.setName("test teacher name");
+        teacher.setUsername("test+sdfsdfefwefwe'sl;fmsdlfml");
         teacherRepository.save(teacher);
+
+        logger.info("init klass data");
+        Klass klass = new Klass();
+        klass.setName("test name");
+        klass.setTeacher(teacher);
+        klassRepository.save(klass);
 
         String url = "/Teacher/" + String.valueOf(teacher.getId());
         this.mockMvc
