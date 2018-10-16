@@ -1,9 +1,6 @@
 package com.mengyunzhi.SpringMvcStudy.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.mengyunzhi.SpringMvcStudy.jsonView.BaseJsonView;
-import com.mengyunzhi.SpringMvcStudy.jsonView.KlassJsonView;
 import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
 
 import javax.persistence.*;
@@ -18,19 +15,14 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(TeacherJsonView.class)
     private Long id;
 
-    @JsonView(TeacherJsonView.class)
     private String username;
 
-    @JsonView(BaseJsonView.class)
     private String name;
 
-    @JsonView(TeacherJsonView.class)
     private boolean sex;
 
-    @JsonView(TeacherJsonView.class)
     private String email;
 
     @OneToMany(mappedBy = "teacher")

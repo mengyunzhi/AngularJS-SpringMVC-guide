@@ -16,7 +16,6 @@ public class Klass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonView({TeacherJsonView.class, KlassJsonView.class})
     private String name;
 
     @ManyToOne

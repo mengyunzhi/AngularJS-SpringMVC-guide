@@ -1,7 +1,6 @@
 package com.mengyunzhi.SpringMvcStudy.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.mengyunzhi.SpringMvcStudy.JsonPage;
 import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.jsonView.KlassJsonView;
 import com.mengyunzhi.SpringMvcStudy.service.KlassService;
@@ -37,7 +36,7 @@ public class KlassController {
     public Page<Klass> page(@RequestParam int page, @RequestParam int size) {
         PageRequest pageRequest = new PageRequest(page, size);
         Page<Klass> klassPage = klassService.page(pageRequest);
-        return new JsonPage(klassPage.getContent(), pageRequest, klassPage.getTotalElements());
+        return klassPage;
     }
 
     @GetMapping("/{id}")
