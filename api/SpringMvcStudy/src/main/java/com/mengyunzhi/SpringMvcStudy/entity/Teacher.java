@@ -2,6 +2,8 @@ package com.mengyunzhi.SpringMvcStudy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mengyunzhi.SpringMvcStudy.jsonView.BaseJsonView;
+import com.mengyunzhi.SpringMvcStudy.jsonView.KlassJsonView;
 import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
 
 import javax.persistence.*;
@@ -22,7 +24,7 @@ public class Teacher {
     @JsonView(TeacherJsonView.class)
     private String username;
 
-    @JsonView(TeacherJsonView.class)
+    @JsonView(BaseJsonView.class)
     private String name;
 
     @JsonView(TeacherJsonView.class)

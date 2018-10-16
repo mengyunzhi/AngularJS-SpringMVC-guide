@@ -1,6 +1,7 @@
 package com.mengyunzhi.SpringMvcStudy.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mengyunzhi.SpringMvcStudy.jsonView.KlassJsonView;
 import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
 
 import javax.persistence.*;
@@ -15,10 +16,11 @@ public class Klass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonView(TeacherJsonView.class)
+    @JsonView({TeacherJsonView.class, KlassJsonView.class})
     private String name;
 
     @ManyToOne
+    @JsonView(KlassJsonView.class)
     private Teacher teacher;
 
     public Klass() {
