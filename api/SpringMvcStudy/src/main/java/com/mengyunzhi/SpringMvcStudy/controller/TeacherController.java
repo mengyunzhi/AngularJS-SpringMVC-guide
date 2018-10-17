@@ -8,6 +8,8 @@ import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author panjie on 2017/11/25
  */
@@ -19,11 +21,15 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;   // 教师
 
+    @Autowired
+    HttpSession httpSession;
+
     // 新增加一个地址为：/Teacher  的GET方法对应的action
     @GetMapping
     @JsonView(TeacherJsonView.class)
     public Iterable<Teacher> getAll() {
         Iterable teachers = teacherRepository.findAll();
+        httpSession.setAttribute("test", "test");
         return teachers;
     }
 
