@@ -25,7 +25,7 @@ angular.module('webAppApp')
                     if (callback) {callback(response.data);}
                 }, function error(response){
                     console.log('error', response);
-                })
+                });
         };
 
         /**
@@ -36,7 +36,7 @@ angular.module('webAppApp')
         self.delete = function(object, callback) {
             var url = '/Klass/' + object.id;
             $http.delete(url)
-            .then(function success(response) {
+            .then(function success() {
                 if (callback)  {callback();}
             }, function error(response) {
                 console.log('error', response);

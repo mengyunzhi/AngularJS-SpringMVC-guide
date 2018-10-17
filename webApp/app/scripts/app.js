@@ -91,7 +91,7 @@ angular
                         show: false
                     }
                 }
-            ])
+            ]);
     })
     .config(function ($stateProvider, $urlRouterProvider, $provide, $httpProvider, routes) {
         // 循环注册路由
@@ -103,7 +103,7 @@ angular
         $urlRouterProvider.otherwise('/main');
 
         // 注册一个用于拦截http的拦截器
-        $provide.factory('myHttpInterceptor', function ($q) {
+        $provide.factory('myHttpInterceptor', function () {
             return {
                 // 拦截请求信息
                 'request': function (config) {
