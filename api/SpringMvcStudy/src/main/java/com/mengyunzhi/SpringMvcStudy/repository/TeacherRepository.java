@@ -11,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
  * 2. Teacher数据表中主键类型是Long
  */
 public interface TeacherRepository extends CrudRepository<Teacher, Long>{
+    // 通过用户名进行查找
+    Teacher findByUsername(String username);
 }
