@@ -21,15 +21,11 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;   // 教师
 
-    @Autowired
-    HttpSession httpSession;
-
     // 新增加一个地址为：/Teacher  的GET方法对应的action
     @GetMapping
     @JsonView(TeacherJsonView.class)
     public Iterable<Teacher> getAll() {
         Iterable teachers = teacherRepository.findAll();
-        httpSession.setAttribute("test", "test");
         return teachers;
     }
 

@@ -110,7 +110,7 @@ angular
                     // 如果以html结尾，那么就不进行URL的改写, 否则就进行改写
                     var suffix = config.url.split('.').pop();
                     if (suffix !== 'html') {
-                        config.url = 'http://127.0.0.1:8080' + config.url;
+                        config.url = 'http://localhost:8200/api' + config.url;
                     }
 
                     return config;
