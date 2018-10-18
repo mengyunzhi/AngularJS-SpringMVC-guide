@@ -1,5 +1,6 @@
 package com.mengyunzhi.SpringMvcStudy.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
@@ -8,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -87,6 +90,7 @@ public class TeacherControllerTest extends ControllerTest {
         // 添加测试数据
         // 实例化一个Teacher并且持久化
         Teacher teacher = new Teacher();
+        teacher.setPassword("cFHXuqByyHb600Xz9lmlrnoE7mHETm7f");
         teacherRepository.save(teacher);
 
         // 更新这个持久化的Teacher
@@ -117,6 +121,46 @@ public class TeacherControllerTest extends ControllerTest {
         // 断言这个删除这个删除成功（查找的时候，查不到了)
         Teacher newTeacher = teacherRepository.findOne(id);
         assertThat(newTeacher).isNull();
+    }
+
+    @Test
+    public void loginTest() throws Exception {
+        // 无此用户名
+        String url = "/Teacher/login";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", "InAbxUsHyQ2dXKbWfueZR6WBfH7ZpLLx");
+        jsonObject.put("password", "pWoLgdwzxVHpkDUuYJf7HQqZcx9dyDjq");
+        String jsonString = jsonObject.toJSONString();
+
+        this.mockMvc
+                .perform(post(url)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(401));
+
+
+        // 密码不正确
+        Teacher teacher = new Teacher();
+        teacher.setUsername("InAbxUsHyQ2dXKbWfueZR6WBfH7ZpLLx");
+        teacher.setPassword("cFHXuqByyHb600Xz9lmlrnoE7mHETm7f");
+        teacherRepository.save(teacher);
+        this.mockMvc
+                .perform(post(url)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(401));
+
+        // 密码正确
+        teacher.setPassword("pWoLgdwzxVHpkDUuYJf7HQqZcx9dyDjq");
+        teacherRepository.save(teacher);
+        this.mockMvc
+                .perform(post(url)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(200));
     }
 
 }

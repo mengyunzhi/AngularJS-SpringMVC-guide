@@ -5,9 +5,13 @@ import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.jsonView.TeacherJsonView;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpSession;
 @RestController //声明一个控制器
 @RequestMapping("/Teacher") // 声明一个路由地址
 public class TeacherController {
+    private final static Logger logger = LoggerFactory.getLogger(TeacherController.class.getName());
     @Autowired
     TeacherRepository teacherRepository; // 自动装置一个实例化的TeacherRepository
     @Autowired
@@ -85,6 +90,17 @@ public class TeacherController {
 
         public void setValue(String value) {
             this.value = value;
+        }
+    }
+
+    // 用户登录
+    @PostMapping("/login")
+    public void login(@RequestBody Teacher teacher, HttpServletResponse httpServletResponse) {
+        if (teacherService.login(teacher)) {
+            logger.info("登录成功");
+        } else {
+            httpServletResponse.setStatus(401);
+            logger.info("登录失败");
         }
     }
 }

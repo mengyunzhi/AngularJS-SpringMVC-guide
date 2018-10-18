@@ -21,6 +21,9 @@ public class Teacher {
 
     private String name;
 
+    @Column(nullable = false)
+    private String password = "yunzhiclub";
+
     private boolean sex;
 
     private String email;
@@ -70,5 +73,13 @@ public class Teacher {
 
     public List<Klass> getKlassList() {
         return klassList;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
