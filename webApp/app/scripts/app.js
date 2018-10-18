@@ -90,6 +90,16 @@ angular
                         title: '编辑',
                         show: false
                     }
+                },
+                {
+                    name: 'login', // 继承klass路由，并声明自己的名字为edit
+                    url: '/login', // 相当于 /klass/edit 由于继承了klass路由
+                    templateUrl: 'views/login.html',
+                    controller: 'LoginCtrl', // 控制器名称
+                    data: {
+                        title: '用户登录',
+                        show: false
+                    }
                 }
             ]);
     })
@@ -100,6 +110,7 @@ angular
                 .state(value);
         });
 
+        // 定义默认路由
         $urlRouterProvider.otherwise('/main');
 
         // 注册一个用于拦截http的拦截器
@@ -110,7 +121,7 @@ angular
                     // 如果以html结尾，那么就不进行URL的改写, 否则就进行改写
                     var suffix = config.url.split('.').pop();
                     if (suffix !== 'html') {
-                        config.url = 'http://localhost:8200/api' + config.url;
+                        config.url = '/api' + config.url;
                     }
 
                     return config;

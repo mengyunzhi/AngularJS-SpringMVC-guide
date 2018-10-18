@@ -21,7 +21,6 @@ public class WebMvcConfig {
     @Bean
     public WebMvcConfigurer webConfigurer() {
         return new WebMvcConfigurerAdapter() {
-
             @Override
             public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
                 ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().defaultViewInclusion(true).build();
