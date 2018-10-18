@@ -16,4 +16,11 @@ public interface TeacherService {
     void update(Long id, Teacher teacher);
 
     void delete(Long id);
+
+    /**
+     * 用户登录
+     * @param teacher
+     * @return 成功 true; 失败 false
+     */
+    boolean login(Teacher teacher);
 }

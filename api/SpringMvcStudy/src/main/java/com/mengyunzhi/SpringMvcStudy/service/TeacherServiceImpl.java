@@ -2,6 +2,8 @@ package com.mengyunzhi.SpringMvcStudy.service;
 
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TeacherServiceImpl implements TeacherService {
+    private final static Logger logger = LoggerFactory.getLogger(TeacherServiceImpl.class.getName());
+
     @Autowired
     TeacherRepository teacherRepository;// 教师仓库
     /**
@@ -38,5 +42,20 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void delete(Long id) {
         teacherRepository.delete(id);
+    }
+
+    @Override
+    public boolean login(Teacher teacher) {
+        logger.debug("获取相关用户");
+        Teacher persistTeacher = teacherRepository.findByUsername(teacher.getUsername());
+        if (persistTeacher == null) {
+            return false;
+        }
+
+        if (!persistTeacher.getPassword().equals(teacher.getPassword())) {
+            return false;
+        }
+
+        return true;
     }
 }
