@@ -36,8 +36,19 @@ angular.module('webAppApp')
             return $http.post(url, user);
         };
 
+        self.logout = function(callback) {
+            var url = '/Teacher/logout';
+            $http.post(url)
+            .then(function success(response) {
+                if (callback) {callback(response);}
+            }, function error(response) {
+                console.error('logout error:', response);
+            });
+        };
+
         return {
             getAllTeachers: self.getAllTeachers,
-            login: self.login
+            login: self.login,
+            logout: self.logout
         };
     });

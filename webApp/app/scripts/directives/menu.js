@@ -8,7 +8,7 @@
  * panjie
  */
 angular.module('webAppApp')
-    .directive('menu', function ($state, routes) {
+    .directive('menu', function ($state, routes, teacher, $location) {
         return {
             templateUrl: 'views/directive/menu.html',
             restrict: 'E',
@@ -43,11 +43,19 @@ angular.module('webAppApp')
                     }
                 };
 
+                // 注销
+                self.logout = function() {
+                    teacher.logout(function(){
+                       $location.url('/login');
+                    });
+                };
+
                 self.init();
                 $scope.isActive = self.isActive;
                 $scope.console = console;
                 $scope.$state = $state;
                 $scope.routes = routes;
+                $scope.logout = self.logout;
             }
         };
     })
