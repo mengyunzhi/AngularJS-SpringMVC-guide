@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -103,4 +104,32 @@ public class TeacherController {
             logger.info("登录失败");
         }
     }
+
+    @GetMapping("/me")
+    public Teacher me(HttpServletResponse httpServletResponse) {
+        Teacher teacher = new Teacher();
+        try {
+            teacher = teacherService.me();
+        } catch (AuthException e) {
+            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        }
+        return teacher;
+    }
+
+    @GetMapping("/getCurrentLoginTeacher")
+    public Teacher getCurrentLoginTeacher(HttpServletResponse httpServletResponse) {
+        return this.me(httpServletResponse);
+    }
+
+
+    @PostMapping("/logout")
+    public void logout(HttpServletResponse httpServletResponse) {
+        try {
+            teacherService.logout();
+        } catch (AuthException e) {
+            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        }
+    }
+
+
 }

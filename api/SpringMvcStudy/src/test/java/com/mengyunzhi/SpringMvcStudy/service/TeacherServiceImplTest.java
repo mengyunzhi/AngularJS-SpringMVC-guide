@@ -4,18 +4,23 @@ import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 /**
  * @author panjie on 2017/11/29
  */
 public class TeacherServiceImplTest extends ServiceTest {
+    private final static Logger logger = LoggerFactory.getLogger(TeacherServiceImplTest.class.getName());
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -113,4 +118,55 @@ public class TeacherServiceImplTest extends ServiceTest {
         Assertions.assertThat(teacher.getName()).isNotNull();
     }
 
+    @Test
+    public void me() throws AuthException {
+        logger.info("未登录，抛出异常");
+        boolean catchException = false;
+        try {
+            teacherService.me();
+        } catch (AuthException e) {
+            catchException = true;
+        }
+        Assertions.assertThat(catchException).isTrue();
+
+
+        logger.info("已登录，获取当前登录用户");
+        Teacher teacher = teacherService.getOneSavedTeacher();
+        teacherService.login(teacher);
+        Teacher loginTeacher = teacherService.me();
+        Assertions.assertThat(loginTeacher.getId()).isNotNull();
+    }
+
+    @Test
+    public void logout() throws AuthException {
+        logger.info("未登录，直接注销，断言异常");
+        boolean catchException = false;
+        try {
+            teacherService.logout();
+        } catch (AuthException e) {
+            catchException = true;
+        }
+        Assertions.assertThat(catchException).isTrue();
+
+        logger.info("已登录");
+        Teacher teacher = teacherService.getOneSavedTeacher();
+        teacherService.login(teacher);
+
+        logger.info("正常获取ME");
+        Teacher currentLoginTeacher = teacherService.me();
+        Assertions.assertThat(currentLoginTeacher.getId()).isEqualTo(teacher.getId());
+
+        logger.info("注销");
+        teacherService.logout();
+
+        logger.info("获取ME异常");
+        catchException = false;
+        try {
+            teacherService.me();
+        } catch (AuthException e) {
+            catchException = true;
+        }
+        Assertions.assertThat(catchException).isTrue();
+
+    }
 }

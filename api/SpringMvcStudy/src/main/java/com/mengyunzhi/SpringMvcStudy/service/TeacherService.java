@@ -2,6 +2,7 @@ package com.mengyunzhi.SpringMvcStudy.service;
 
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 
+import javax.security.auth.message.AuthException;
 import java.security.SecureRandom;
 
 /**
@@ -33,6 +34,18 @@ public interface TeacherService {
     boolean login(Teacher teacher);
 
     /**
+     * 我是谁
+     * @return
+     */
+    Teacher me() throws AuthException;
+
+    /**
+     * 获取当前登录用户
+     * @return
+     */
+    Teacher getCurrentLoginTeacher() throws AuthException;
+
+    /**
      * 获取一个教师
      *
      * @return
@@ -52,4 +65,7 @@ public interface TeacherService {
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         return sb.toString();
     }
+
+    void logout() throws AuthException;
+
 }

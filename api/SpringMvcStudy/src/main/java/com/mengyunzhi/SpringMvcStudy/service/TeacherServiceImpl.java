@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -70,6 +71,23 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher me() throws AuthException {
+        Long teacherId = (Long) httpSession.getAttribute(TeacherService.TEACHER_ID);
+        if (teacherId == null) {
+            throw new AuthException("please login first");
+        }
+
+        Teacher teacher = new Teacher();
+        teacher.setId(teacherId);
+        return teacher;
+    }
+
+    @Override
+    public Teacher getCurrentLoginTeacher() throws AuthException {
+        return this.me();
+    }
+
+    @Override
     public Teacher getOneTeacher() {
         Teacher teacher = new Teacher();
         teacher.setName("测试名称" + TeacherService.randomString(10));
@@ -83,5 +101,15 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = this.getOneTeacher();
         teacherRepository.save(teacher);
         return teacher;
+    }
+
+    @Override
+    public void logout() throws AuthException {
+        Long teacherId = (Long) httpSession.getAttribute(TeacherService.TEACHER_ID);
+        if (teacherId == null) {
+            throw new AuthException("please login first");
+        }
+
+        httpSession.removeAttribute(TeacherService.TEACHER_ID);
     }
 }

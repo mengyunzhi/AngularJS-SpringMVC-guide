@@ -14,16 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -165,18 +170,51 @@ public class TeacherControllerTest extends ControllerTest {
         // 密码正确
         teacher.setPassword("pWoLgdwzxVHpkDUuYJf7HQqZcx9dyDjq");
         teacherRepository.save(teacher);
-        this.mockMvc
+        MvcResult mvcResult = this.mockMvc
                 .perform(post(url)
                         .content(jsonString)
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
-                .andExpect(status().is(200));
+                .andExpect(status().is(200))
+                .andReturn();
+        Cookie cookie = mvcResult.getResponse().getCookie("SESSION");
 
-        Assertions.assertThat((Long) httpSession.getAttribute(TeacherService.TEACHER_ID)).isEqualTo(teacher.getId());
+        logger.info("获取当前登录用户，断言其ID为登录用户ID");
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("/Teacher/me");
+        arrayList.add("/Teacher/getCurrentLoginTeacher");
+        for (String meUrl : arrayList) {
+            mvcResult = this.mockMvc
+                    .perform(get(meUrl)
+                            .contentType(MediaType.APPLICATION_JSON_UTF8)
+                            .cookie(cookie))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andReturn();
+            String content = mvcResult.getResponse().getContentAsString();
+            jsonObject = JSONObject.parseObject(content);
+            Integer getId = (Integer) jsonObject.get("id");
+            Assertions.assertThat(getId.longValue()).isEqualTo(teacher.getId());
+
+            this.mockMvc
+                    .perform(get(meUrl)
+                            .contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andDo(print())
+                    .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        }
+
     }
 
     @Test
     public void logout() throws Exception {
+        logger.info("用户注销，断言401");
+        String logoutUrl = "/Teacher/logout";
+        this.mockMvc
+                .perform(post(logoutUrl)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+
         logger.info("用户登录");
         Teacher teacher = teacherService.getOneSavedTeacher();
         JSONObject jsonObject = new JSONObject();
@@ -185,14 +223,39 @@ public class TeacherControllerTest extends ControllerTest {
         String jsonString = jsonObject.toJSONString();
 
         String loginUrl = "/Teacher/login";
-        this.mockMvc
+        MvcResult mvcResult = this.mockMvc
                 .perform(post(loginUrl)
                         .content(jsonString)
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
-                .andExpect(status().is(200));
+                .andExpect(status().is(200))
+                .andReturn();
 
+        logger.info("用户注销(不带COOKIE），401");
+        this.mockMvc
+                .perform(post(logoutUrl)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
+        logger.info("获取cookie");
+        Cookie cookie = mvcResult.getResponse().getCookie("SESSION");
+
+        logger.info("用户注销，200");
+        this.mockMvc
+                .perform(post(logoutUrl)
+                        .cookie(cookie)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        logger.info("用户注销，401");
+        this.mockMvc
+                .perform(post(logoutUrl)
+                        .cookie(cookie)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
 
