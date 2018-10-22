@@ -5,6 +5,8 @@ import com.mengyunzhi.SpringMvcStudy.entity.Klass;
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
+import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -34,7 +38,13 @@ public class TeacherControllerTest extends ControllerTest {
     @Autowired
     TeacherRepository teacherRepository;    // 教师
     @Autowired
+    TeacherService teacherService;
+    @Autowired
     KlassRepository klassRepository; // 班级
+
+    @Autowired
+    HttpSession httpSession;
+
 
     @Test
     @Transactional(propagation = Propagation.NEVER)
@@ -161,6 +171,29 @@ public class TeacherControllerTest extends ControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().is(200));
+
+        Assertions.assertThat((Long) httpSession.getAttribute(TeacherService.TEACHER_ID)).isEqualTo(teacher.getId());
+    }
+
+    @Test
+    public void logout() throws Exception {
+        logger.info("用户登录");
+        Teacher teacher = teacherService.getOneSavedTeacher();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", teacher.getUsername());
+        jsonObject.put("password", teacher.getPassword());
+        String jsonString = jsonObject.toJSONString();
+
+        String loginUrl = "/Teacher/login";
+        this.mockMvc
+                .perform(post(loginUrl)
+                        .content(jsonString)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().is(200));
+
+
+
     }
 
 }
