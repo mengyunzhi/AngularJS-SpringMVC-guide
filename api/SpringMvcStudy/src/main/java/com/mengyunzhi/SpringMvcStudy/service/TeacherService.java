@@ -12,6 +12,7 @@ import java.security.SecureRandom;
 public interface TeacherService {
     String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     SecureRandom rnd = new SecureRandom();
+    String TEACHER_ID = "teacherId";
 
     /**
      * 更新实体

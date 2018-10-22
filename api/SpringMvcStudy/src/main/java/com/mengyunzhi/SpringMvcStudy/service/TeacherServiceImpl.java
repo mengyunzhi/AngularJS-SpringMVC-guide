@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
+import javax.servlet.http.HttpSession;
 
 /**
  * 教师
@@ -19,6 +19,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     TeacherRepository teacherRepository;// 教师仓库
+    @Autowired
+    HttpSession httpSession;
     /**
      * 更新实体
      * @param id 被更新的实体ID
@@ -57,6 +59,12 @@ public class TeacherServiceImpl implements TeacherService {
         if (!persistTeacher.getPassword().equals(teacher.getPassword())) {
             return false;
         }
+
+        logger.debug("记录当前用户ID");
+        httpSession.setAttribute(TeacherService.TEACHER_ID, persistTeacher.getId());
+
+        logger.debug("写入teacherId");
+        teacher.setId(persistTeacher.getId());
 
         return true;
     }

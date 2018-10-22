@@ -1,17 +1,16 @@
 package com.mengyunzhi.SpringMvcStudy.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+
+import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author panjie on 2017/11/29
@@ -21,6 +20,8 @@ public class TeacherServiceImplTest extends ServiceTest {
     TeacherService teacherService;
     @Autowired
     TeacherRepository teacherRepository; // 教师表
+    @Autowired
+    HttpSession httpSession;
     @Test
     public void updateTest() throws Exception {
         // 新建一个教师张三，并持久化
@@ -84,9 +85,14 @@ public class TeacherServiceImplTest extends ServiceTest {
         testTeacher.setPassword("LdAUkm37Q5P0oEDLDJtJqKJMJwHaYTmq12");
         Assertions.assertThat(teacherService.login(testTeacher)).isFalse();
 
-        // 用户名密码正确
+        // 用户名密码正确。断言登录成功，断言成功存入session信息
         testTeacher.setPassword(teacher.getPassword());
         Assertions.assertThat(teacherService.login(testTeacher)).isTrue();
+        Assertions.assertThat(testTeacher.getId()).isNotNull();
+        Long teacherId = (Long) httpSession.getAttribute(TeacherService.TEACHER_ID);
+        Assertions.assertThat(teacherId).isNotNull();
+        Assertions.assertThat(teacherId).isNotEqualTo(0L);
+        Assertions.assertThat(teacherId).isEqualTo(testTeacher.getId());
 
     }
 
