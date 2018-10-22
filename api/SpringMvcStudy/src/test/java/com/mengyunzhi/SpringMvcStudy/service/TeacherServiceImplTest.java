@@ -90,4 +90,21 @@ public class TeacherServiceImplTest extends ServiceTest {
 
     }
 
+    @Test
+    public void getOneTeacher() {
+        Teacher teacher = teacherService.getOneTeacher();
+        Assertions.assertThat(teacher.getUsername()).isNotNull();
+        Assertions.assertThat(teacher.getPassword()).isNotNull();
+        Assertions.assertThat(teacher.getName()).isNotNull();
+    }
+
+    @Test
+    public void getOneSavedTeacher() {
+        Teacher teacher = teacherService.getOneSavedTeacher();
+        Assertions.assertThat(teacher.getId()).isNotNull();
+        Assertions.assertThat(teacher.getUsername()).isNotNull();
+        Assertions.assertThat(teacher.getPassword()).isNotNull();
+        Assertions.assertThat(teacher.getName()).isNotNull();
+    }
+
 }

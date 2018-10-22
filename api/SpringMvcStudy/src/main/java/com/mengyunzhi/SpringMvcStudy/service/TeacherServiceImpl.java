@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+
 /**
  * 教师
  * @author panjie on 2017/11/29
@@ -57,5 +59,21 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         return true;
+    }
+
+    @Override
+    public Teacher getOneTeacher() {
+        Teacher teacher = new Teacher();
+        teacher.setName("测试名称" + TeacherService.randomString(10));
+        teacher.setUsername("teseUsername-" + TeacherService.randomString(20));
+        teacher.setPassword("testPassword-" + TeacherService.randomString(10));
+        return teacher;
+    }
+
+    @Override
+    public Teacher getOneSavedTeacher() {
+        Teacher teacher = this.getOneTeacher();
+        teacherRepository.save(teacher);
+        return teacher;
     }
 }
