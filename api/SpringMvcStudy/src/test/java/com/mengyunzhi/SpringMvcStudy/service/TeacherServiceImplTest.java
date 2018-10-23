@@ -135,6 +135,7 @@ public class TeacherServiceImplTest extends ServiceTest {
         teacherService.login(teacher);
         Teacher loginTeacher = teacherService.me();
         Assertions.assertThat(loginTeacher.getId()).isNotNull();
+        Assertions.assertThat(loginTeacher.getName()).isNotNull();
     }
 
     @Test

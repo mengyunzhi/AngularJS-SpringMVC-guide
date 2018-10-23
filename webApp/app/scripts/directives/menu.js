@@ -15,7 +15,16 @@ angular.module('webAppApp')
             link: function postLink($scope) {
                 var self = this;
                 self.init = function () {
+                    $scope.data = {
+                        currentLoginTeacher: {
+                            id: undefined,
+                            name: '匿名'
+                        }
+                    };
 
+                    teacher.registerObserverCallback(function(teacher) {
+                        $scope.data.currentLoginTeacher = teacher;
+                    });
                 };
 
                 /**

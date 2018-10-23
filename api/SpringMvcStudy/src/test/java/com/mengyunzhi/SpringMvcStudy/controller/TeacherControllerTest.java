@@ -205,6 +205,10 @@ public class TeacherControllerTest extends ControllerTest {
 
     }
 
+    private void me () throws Exception {
+        this.loginTest();
+    }
+
     @Test
     public void logout() throws Exception {
         logger.info("用户注销，断言401");

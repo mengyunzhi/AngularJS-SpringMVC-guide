@@ -15,8 +15,9 @@
                     <li ng-if="route.data.show" ng-class="{'active': isActive(route)}" ng-repeat="route in routes"><a ui-sref="{{route.name}}">{{route.data.title}}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">欢迎您 张三<span class="caret"></span></a>
+                    <li ng-hide="data.currentLoginTeacher.id"><a ui-sref="login">登录</a></li>
+                    <li class="dropdown" ng-show="data.currentLoginTeacher.id">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">欢迎您 {{data.currentLoginTeacher.name}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">个人中心</a></li>
                             <li><a href="#">您有<span>4</span>条未读消息</a></li>

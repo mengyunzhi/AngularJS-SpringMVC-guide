@@ -25,7 +25,9 @@ angular.module('webAppApp')
         	teacher.login($scope.user)
         	.then(function success(response) {
         		$scope.showErrorBox = false;
-        		$location.url('/main');
+                teacher.getCurrentLoginTeacher(function() {
+                    $location.url('/main');
+                });
         	}, function error(response) {
         		$scope.showErrorBox = true;
         		console.log('error', response);

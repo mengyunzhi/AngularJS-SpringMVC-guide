@@ -77,8 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
             throw new AuthException("please login first");
         }
 
-        Teacher teacher = new Teacher();
-        teacher.setId(teacherId);
+        Teacher teacher = teacherRepository.findOne(teacherId);
         return teacher;
     }
 
