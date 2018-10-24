@@ -1,15 +1,22 @@
 package com.mengyunzhi.SpringMvcStudy.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mengyunzhi.SpringMvcStudy.entity.Klass;
+import com.mengyunzhi.SpringMvcStudy.entity.Teacher;
 import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
+import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
+import javax.servlet.http.Cookie;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,8 +41,9 @@ public class KlassControllerTest extends ControllerTest {
     @Test
     public void saveTest() throws Exception {
         this.mockMvc
-                .perform(post(url)
+                .perform(post(this.url)
                         .content("{}")
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().is(201));
@@ -45,6 +53,7 @@ public class KlassControllerTest extends ControllerTest {
     public void getAll() throws Exception {
         this.mockMvc
                 .perform(get(url)
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -55,6 +64,7 @@ public class KlassControllerTest extends ControllerTest {
         String pageUrl = url + "page";
         this.mockMvc
                 .perform(get(pageUrl)
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8)
                         .param("page", "0")
                         .param("size", "2"))
@@ -77,6 +87,7 @@ public class KlassControllerTest extends ControllerTest {
 
         this.mockMvc
                 .perform(get(getUrl)
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -100,6 +111,7 @@ public class KlassControllerTest extends ControllerTest {
         String putUrl = url + klass.getId().toString();
         this.mockMvc
                 .perform(MockMvcRequestBuilders.put(putUrl)
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8)
                         .content("{\"name\":\"" + newName + "\"}"))
                 .andExpect(status().isOk());
@@ -119,6 +131,7 @@ public class KlassControllerTest extends ControllerTest {
         logger.info("调用C层的删除方法");
         this.mockMvc
                 .perform(MockMvcRequestBuilders.delete(deleteUrl)
+                        .cookie(this.cookie)
                         .header("content-type", MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().is(204));
 

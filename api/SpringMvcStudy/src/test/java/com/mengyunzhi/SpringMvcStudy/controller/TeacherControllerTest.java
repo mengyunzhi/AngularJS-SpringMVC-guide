@@ -7,6 +7,7 @@ import com.mengyunzhi.SpringMvcStudy.repository.KlassRepository;
 import com.mengyunzhi.SpringMvcStudy.repository.TeacherRepository;
 import com.mengyunzhi.SpringMvcStudy.service.TeacherService;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class TeacherControllerTest extends ControllerTest {
 
 
     @Test
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void getAllTest() throws Exception {
         logger.info("init teacher data");
         Teacher teacher = new Teacher();
@@ -70,13 +71,15 @@ public class TeacherControllerTest extends ControllerTest {
 
         String url = "/Teacher";
         this.mockMvc
-                .perform(get(url))  // 用get方法来请求这个url
+                .perform(get(url)
+                        .cookie(this.cookie)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))  // 用get方法来请求这个url
                 .andDo(print()) // 请求后，打印请求的返回数据
                 .andExpect(status().isOk()); // 断言返回的状态为真
     }
 
     @Test
-    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void getTest() throws Exception {
         // 创建一条数据
         logger.info("init teacher data");
@@ -95,7 +98,9 @@ public class TeacherControllerTest extends ControllerTest {
 
         String url = "/Teacher/" + String.valueOf(teacher.getId());
         this.mockMvc
-                .perform(get(url))  // 用get方法来请求这个url
+                .perform(get(url)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .cookie(this.cookie))  // 用get方法来请求这个url
                 .andDo(print()) // 请求后，打印请求的返回数据
                 .andExpect(status().isOk()); // 断言返回的状态为真
     }
@@ -113,6 +118,7 @@ public class TeacherControllerTest extends ControllerTest {
         this.mockMvc
                 .perform(put(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .cookie(this.cookie)
                         .content("{}"))  // 用get方法来请求这个url
                 .andDo(print()) // 请求后，打印请求的返回数据
                 .andExpect(status().isOk()); // 断言返回的状态为真
@@ -129,6 +135,7 @@ public class TeacherControllerTest extends ControllerTest {
         String url = "/Teacher/" + teacher.getId();
         this.mockMvc
                 .perform(delete(url)
+                        .cookie(this.cookie)
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print()) // 请求后，打印请求的返回数据
                 .andExpect(status().isOk()); // 断言返回的状态为真
@@ -205,7 +212,7 @@ public class TeacherControllerTest extends ControllerTest {
 
     }
 
-    private void me () throws Exception {
+    private void me() throws Exception {
         this.loginTest();
     }
 
