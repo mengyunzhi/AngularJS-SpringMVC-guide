@@ -37,7 +37,7 @@ public interface TeacherService {
      * 我是谁
      * @return
      */
-    Teacher me() throws AuthException;
+    Teacher me();
 
     /**
      * 获取当前登录用户
@@ -67,5 +67,8 @@ public interface TeacherService {
     }
 
     void logout() throws AuthException;
+
+    // 用户是否认证
+    boolean isAuth();
 
 }

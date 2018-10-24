@@ -71,18 +71,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher me() throws AuthException {
+    public Teacher me() {
         Long teacherId = (Long) httpSession.getAttribute(TeacherService.TEACHER_ID);
-        if (teacherId == null) {
-            throw new AuthException("please login first");
-        }
-
         Teacher teacher = teacherRepository.findOne(teacherId);
         return teacher;
     }
 
     @Override
-    public Teacher getCurrentLoginTeacher() throws AuthException {
+    public Teacher getCurrentLoginTeacher() {
         return this.me();
     }
 
@@ -110,5 +106,11 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         httpSession.removeAttribute(TeacherService.TEACHER_ID);
+    }
+
+    @Override
+    public boolean isAuth() {
+        Long teacherId = (Long) httpSession.getAttribute(TeacherService.TEACHER_ID);
+        return teacherId != null;
     }
 }

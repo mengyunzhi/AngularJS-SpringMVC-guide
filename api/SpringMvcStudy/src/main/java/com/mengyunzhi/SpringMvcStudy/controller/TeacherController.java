@@ -97,6 +97,7 @@ public class TeacherController {
     // 用户登录
     @PostMapping("/login")
     public void login(@RequestBody Teacher teacher, HttpServletResponse httpServletResponse) {
+        logger.info("用户登录");
         if (teacherService.login(teacher)) {
             logger.info("登录成功");
         } else {
@@ -107,12 +108,8 @@ public class TeacherController {
 
     @GetMapping("/me")
     public Teacher me(HttpServletResponse httpServletResponse) {
-        Teacher teacher = new Teacher();
-        try {
-            teacher = teacherService.me();
-        } catch (AuthException e) {
-            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-        }
+
+        Teacher teacher = teacherService.me();
         return teacher;
     }
 

@@ -119,16 +119,7 @@ public class TeacherServiceImplTest extends ServiceTest {
     }
 
     @Test
-    public void me() throws AuthException {
-        logger.info("未登录，抛出异常");
-        boolean catchException = false;
-        try {
-            teacherService.me();
-        } catch (AuthException e) {
-            catchException = true;
-        }
-        Assertions.assertThat(catchException).isTrue();
-
+    public void me() {
 
         logger.info("已登录，获取当前登录用户");
         Teacher teacher = teacherService.getOneSavedTeacher();
@@ -159,15 +150,5 @@ public class TeacherServiceImplTest extends ServiceTest {
 
         logger.info("注销");
         teacherService.logout();
-
-        logger.info("获取ME异常");
-        catchException = false;
-        try {
-            teacherService.me();
-        } catch (AuthException e) {
-            catchException = true;
-        }
-        Assertions.assertThat(catchException).isTrue();
-
     }
 }
