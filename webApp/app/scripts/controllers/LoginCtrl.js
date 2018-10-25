@@ -23,16 +23,14 @@ angular.module('webAppApp')
 
         self.submit = function() {
             teacher.login($scope.user)
-                .then(function success(response) {
-                    if (response.status === 401) {
-                        $scope.showErrorBox = true;
-                        console.log('error', response);
-                    } else {
-                        $scope.showErrorBox = false;
-                        teacher.getCurrentLoginTeacher(function() {
-                            $location.url('/main');
-                        });
-                    }
+                .then(function success() {
+                    $scope.showErrorBox = false;
+                    teacher.getCurrentLoginTeacher(function() {
+                        $location.url('/main');
+                    });
+                }, function error(response) {
+                    $scope.showErrorBox = true;
+                    console.log('error', response);
                 });
         };
 

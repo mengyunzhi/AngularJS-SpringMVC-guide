@@ -8,9 +8,15 @@
  * Service in the webAppApp.
  */
 angular.module('webAppApp')
-    .service('teacher', function($http) {
+    .service('teacher', function($http, $timeout) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var self = this;
+
+        self.init = function() {
+            $timeout(function(){
+                 self.getCurrentLoginTeacher();
+            }, 500);
+        };
 
         // 观察者
         self.observerCallbacks = [];
@@ -75,6 +81,8 @@ angular.module('webAppApp')
                     console.error('获取当前登录教师错误', response);
                 });
         };
+
+        self.init();
 
         return {
             getAllTeachers: self.getAllTeachers,
