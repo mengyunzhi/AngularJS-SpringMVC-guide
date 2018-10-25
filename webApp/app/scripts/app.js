@@ -114,7 +114,7 @@ angular
         $urlRouterProvider.otherwise('/main');
 
         // 注册一个用于拦截http的拦截器
-        $provide.factory('myHttpInterceptor', function () {
+        $provide.factory('myHttpInterceptor', function ($location) {
             return {
                 // 拦截请求信息
                 'request': function (config) {
@@ -125,6 +125,14 @@ angular
                     }
 
                     return config;
+                },
+                'responseError': function(rejection) {
+                    console.log(rejection);
+                    if (rejection.status === 401 && rejection.config.url !== '/api/Teacher/login') {
+                        console.log('用户认证失败');
+                        $location.url('/login');
+                    }
+                    return rejection;
                 }
             };
         });
